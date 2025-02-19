@@ -1,4 +1,6 @@
 let productHTML = ''
+let timeouts = {}; // Objek untuk menyimpan timeout per produk
+
 products.forEach(e => {
     productHTML += `
             <div class="product-container">
@@ -40,7 +42,7 @@ products.forEach(e => {
 
                 <div class="product-spacer"></div>
 
-                <div class="added-to-cart">
+                <div class="added-to-cart js-added-${e.id}">
                     <img src="images/icons/checkmark.png">
                     Added
                 </div>
@@ -57,13 +59,27 @@ document.querySelector('.products-grid').innerHTML = productHTML;
 document.querySelectorAll('.add-to-cart-button')
     .forEach((button)=>{
         button.addEventListener('click', (e)=>{
-            const productId = button.dataset.productId;
+            const {productId} = button.dataset;
             let productExists = false;
             let quantityCounter = 0;
-            let productQuantity = document.querySelector(`.js-quantity-selector-${productId}`).value;
+            let productQuantity = Number(document.querySelector(`.js-quantity-selector-${productId}`).value);
+            let addedElement = document.querySelector(`.js-added-${productId}`);
+
+            // Tampilkan "Added"
+            addedElement.style.opacity = "1";
+             
+            if (timeouts[productId]) {
+                clearTimeout(timeouts[productId]);
+            }
+             // Sembunyikan setelah 2 detik
+             timeouts[productId] = setTimeout(() => {
+                addedElement.style.opacity = "0";
+             }, 1500);
+
+            
             cart.forEach((e) => {
                 if (productId === e.id) {
-                    e.quantity += Number(productQuantity);
+                    e.quantity += productQuantity;
                     productExists = true;
                 }
             });
@@ -71,13 +87,14 @@ document.querySelectorAll('.add-to-cart-button')
             if (!productExists) {
                 cart.push({
                     id: productId,
-                    quantity: Number(productQuantity)
+                    quantity: productQuantity
                 });
             }
             cart.forEach(e => {
                 quantityCounter += e.quantity;
             });
             document.querySelector('.cart-quantity').innerHTML = quantityCounter;
+            console.log(cart)
             
         })
     })

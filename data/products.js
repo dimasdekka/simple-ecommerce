@@ -1,5 +1,39 @@
 const products = [
-  {
+{
+    id: "a1b2c3d4-e5f6-7890-ghij-1234567890kl",
+    image: "images/products/stainless-steel-cookware-set.jpg",
+    name: "Stainless Steel Cookware Set - 10 Pieces",
+    rating: {
+      stars: 4.5,
+      count: 275
+    },
+    priceCents: 12999,
+    keywords: [
+      "kitchen",
+      "cookware",
+      "stainless steel",
+      "pots",
+      "pans"
+    ]
+},
+{
+    id: "z9y8x7w6-v5u4-3210-tuvw-0987654321mn",
+    image: "images/products/ergonomic-office-chair.jpg",
+    name: "Ergonomic Office Chair - Adjustable Height",
+    rating: {
+      stars: 4.5,
+      count: 320
+    },
+    priceCents: 8999,
+    keywords: [
+      "office",
+      "chair",
+      "furniture",
+      "ergonomic",
+      "adjustable"
+    ]
+},
+{
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
     image: "images/products/athletic-cotton-socks-6-pairs.jpg",
     name: "Black and Gray Athletic Cotton Socks - 6 Pairs",
