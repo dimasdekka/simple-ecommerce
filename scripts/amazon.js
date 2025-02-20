@@ -1,3 +1,8 @@
+import {cart} from "../data/cart";
+import {products} from "../data/products.js";
+console.log(cart)
+console.log(products)
+
 let productHTML = ''
 let timeouts = {}; // Objek untuk menyimpan timeout per produk
 
