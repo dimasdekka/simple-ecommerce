@@ -1,46 +1,38 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Orders</title>
+    <title>Orders - ShopStyle</title>
 
-    <!-- This code is needed for responsive design to work.
-      (Responsive design = make the website look good on
-      smaller screen sizes like a phone or a tablet). -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Load a font called Roboto from Google Fonts. -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Here are the CSS files for this page. -->
     <link rel="stylesheet" href="styles/shared/general.css">
-    <link rel="stylesheet" href="styles/shared/amazon-header.css">
+    <link rel="stylesheet" href="styles/shared/header.css">
     <link rel="stylesheet" href="styles/pages/orders.css">
   </head>
   <body>
-    <div class="amazon-header">
-      <div class="amazon-header-left-section">
-        <a href="amazon.html" class="header-link">
-          <img class="amazon-logo"
-            src="images/amazon-logo-white.png">
-          <img class="amazon-mobile-logo"
-            src="images/amazon-mobile-logo-white.png">
+    <div class="header">
+      <div class="header-left-section">
+        <a href="index.html" class="header-link">
+          <span class="site-name">ShopStyle</span>
         </a>
       </div>
 
-      <div class="amazon-header-middle-section">
-        <input class="search-bar" type="text" placeholder="Search">
-
-        <button class="search-button">
-          <img class="search-icon" src="images/icons/search-icon.png">
-        </button>
+      <div class="header-middle-section">
+        <div class="search-container">
+          <input class="search-bar" type="text" placeholder="Search for products...">
+          <button class="search-button">
+            <img class="search-icon" src="images/icons/search-icon.png">
+          </button>
+        </div>
       </div>
 
-      <div class="amazon-header-right-section">
+      <div class="header-right-section">
         <a class="orders-link header-link" href="orders.html">
-          <span class="returns-text">Returns</span>
-          <span class="orders-text">& Orders</span>
+          <span class="orders-text">Orders</span>
         </a>
 
         <a class="cart-link header-link" href="checkout.html">
@@ -56,7 +48,6 @@
 
       <div class="orders-grid">
         <div class="order-container">
-          
           <div class="order-header">
             <div class="order-header-left-section">
               <div class="order-date">
@@ -90,7 +81,7 @@
               <div class="product-quantity">
                 Quantity: 1
               </div>
-              <button class="buy-again-button button-primary">
+              <button class="button-primary">
                 <img class="buy-again-icon" src="images/icons/buy-again.png">
                 <span class="buy-again-message">Buy it again</span>
               </button>
@@ -98,7 +89,7 @@
 
             <div class="product-actions">
               <a href="tracking.html">
-                <button class="track-package-button button-secondary">
+                <button class="button-secondary">
                   Track package
                 </button>
               </a>
@@ -118,7 +109,7 @@
               <div class="product-quantity">
                 Quantity: 2
               </div>
-              <button class="buy-again-button button-primary">
+              <button class="button-primary">
                 <img class="buy-again-icon" src="images/icons/buy-again.png">
                 <span class="buy-again-message">Buy it again</span>
               </button>
@@ -126,7 +117,7 @@
 
             <div class="product-actions">
               <a href="tracking.html">
-                <button class="track-package-button button-secondary">
+                <button class="button-secondary">
                   Track package
                 </button>
               </a>
@@ -135,7 +126,6 @@
         </div>
 
         <div class="order-container">
-
           <div class="order-header">
             <div class="order-header-left-section">
               <div class="order-date">
@@ -169,7 +159,7 @@
               <div class="product-quantity">
                 Quantity: 2
               </div>
-              <button class="buy-again-button button-primary">
+              <button class="button-primary">
                 <img class="buy-again-icon" src="images/icons/buy-again.png">
                 <span class="buy-again-message">Buy it again</span>
               </button>
@@ -177,7 +167,7 @@
 
             <div class="product-actions">
               <a href="tracking.html">
-                <button class="track-package-button button-secondary">
+                <button class="button-secondary">
                   Track package
                 </button>
               </a>

@@ -1,7 +1,5 @@
-import {cart} from "../data/cart";
-import {products} from "../data/products.js";
-console.log(cart)
-console.log(products)
+import {carts, addToCart} from "../data/cart.js";
+import {products } from "../data/products.js";
 
 let productHTML = ''
 let timeouts = {}; // Objek untuk menyimpan timeout per produk
@@ -61,48 +59,32 @@ products.forEach(e => {
 });
 
 document.querySelector('.products-grid').innerHTML = productHTML;
+
+function updateCartQuantity(productId){
+    let quantityCounter = 0;
+    let addedElement = document.querySelector(`.js-added-${productId}`);
+    // Tampilkan "Added"
+    addedElement.style.opacity = "1";
+                
+    if (timeouts[productId]) {
+        clearTimeout(timeouts[productId]);
+    }
+    // Sembunyikan setelah 2 detik
+    timeouts[productId] = setTimeout(() => {
+        addedElement.style.opacity = "0";
+    }, 1500);
+    carts.forEach(cartItem => {
+        quantityCounter += cartItem.quantity;
+    });
+    document.querySelector('.cart-quantity').innerHTML = quantityCounter;
+}
+
 document.querySelectorAll('.add-to-cart-button')
     .forEach((button)=>{
         button.addEventListener('click', (e)=>{
             const {productId} = button.dataset;
-            let productExists = false;
-            let quantityCounter = 0;
-            let productQuantity = Number(document.querySelector(`.js-quantity-selector-${productId}`).value);
-            let addedElement = document.querySelector(`.js-added-${productId}`);
-
-            // Tampilkan "Added"
-            addedElement.style.opacity = "1";
-             
-            if (timeouts[productId]) {
-                clearTimeout(timeouts[productId]);
-            }
-             // Sembunyikan setelah 2 detik
-             timeouts[productId] = setTimeout(() => {
-                addedElement.style.opacity = "0";
-             }, 1500);
-
-            
-            cart.forEach((e) => {
-                if (productId === e.id) {
-                    e.quantity += productQuantity;
-                    productExists = true;
-                }
-            });
-
-            if (!productExists) {
-                cart.push({
-                    id: productId,
-                    quantity: productQuantity
-                });
-            }
-            cart.forEach(e => {
-                quantityCounter += e.quantity;
-            });
-            document.querySelector('.cart-quantity').innerHTML = quantityCounter;
-            console.log(cart)
+            addToCart(productId);
+            updateCartQuantity(productId)
             
         })
     })
-
-
-

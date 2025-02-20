@@ -1,81 +1,115 @@
 .main {
   max-width: 850px;
-  margin-top: 90px;
-  margin-bottom: 100px;
-  padding-left: 30px;
-  padding-right: 30px;
+  margin: 90px auto;
+  padding: 0 30px;
+}
 
-  /* margin-left: auto;
-     margin-right auto;
-     Is a trick for centering an element horizontally
-     without needing a container. */
-  margin-left: auto;
-  margin-right: auto;
+.order-tracking {
+  background-color: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
 .back-to-orders-link {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-size: 0.95rem;
   display: inline-block;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
+  transition: color 0.2s;
+}
+
+.back-to-orders-link:hover {
+  color: #357abd;
+  text-decoration: underline;
 }
 
 .delivery-date {
-  font-size: 25px;
-  font-weight: 700;
-  margin-bottom: 10px;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: var(--text-color);
 }
 
 .product-info {
-  margin-bottom: 3px;
+  color: var(--text-color);
+  margin-bottom: 10px;
+  font-size: 1.1rem;
 }
 
 .product-image {
-  max-width: 150px;
-  max-height: 150px;
-  margin-top: 25px;
-  margin-bottom: 50px;
+  max-width: 140px;
+  max-height: 140px;
+  margin-top: 30px;
+  margin-bottom: 40px;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.product-image:hover {
+  transform: scale(1.05);
 }
 
 .progress-labels-container {
   display: flex;
   justify-content: space-between;
-  font-size: 20px;
-  font-weight: 500;
   margin-bottom: 15px;
+  position: relative;
+}
+
+.progress-label {
+  color: var(--light-text);
+  font-size: 1rem;
+  position: relative;
+  z-index: 1;
+  background-color: white;
+  padding: 0 10px;
 }
 
 .current-status {
-  color: rgb(6, 125, 98);
-}
-
-@media (max-width: 575px) {
-  .progress-labels-container {
-    font-size: 16px;
-  }
-}
-
-@media (max-width: 450px) {
-  .progress-labels-container {
-    flex-direction: column;
-    margin-bottom: 5px;
-  }
-
-  .progress-label {
-    margin-bottom: 3px;
-  }
+  color: var(--accent-color);
+  font-weight: 500;
 }
 
 .progress-bar-container {
-  height: 25px;
-  width: 100%;
-
-  border: 1px solid rgb(200, 200, 200);
-  border-radius: 50px;
-  overflow: hidden;
+  height: 4px;
+  background-color: var(--border-color);
+  border-radius: 2px;
+  position: relative;
+  margin: 0 10px;
 }
 
 .progress-bar {
-  height: 100%;
-  background-color: green;
-  border-radius: 50px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
   width: 50%;
+  background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+@media (max-width: 575px) {
+  .main {
+    margin: 70px auto;
+    padding: 0 20px;
+  }
+
+  .order-tracking {
+    padding: 20px;
+  }
+
+  .delivery-date {
+    font-size: 1.5rem;
+  }
+
+  .product-info {
+    font-size: 1rem;
+  }
+
+  .progress-label {
+    font-size: 0.9rem;
+  }
 }

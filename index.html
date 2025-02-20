@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>ShopStyle - Modern Shopping Experience</title>
+    <title>ShopStyle</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -10,13 +10,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="styles/shared/general.css">
-    <link rel="stylesheet" href="styles/shared/amazon-header.css">
-    <link rel="stylesheet" href="styles/pages/amazon.css">
+    <link rel="stylesheet" href="styles/shared/header.css">
+    <link rel="stylesheet" href="styles/pages/home.css">
   </head>
   <body>
     <div class="header">
       <div class="header-left-section">
-        <a href="amazon.html" class="header-link">
+        <a href="index.html" class="header-link">
           <span class="site-name">ShopStyle</span>
         </a>
       </div>
@@ -43,37 +43,26 @@
       </div>
     </div>
 
-    <div class="hero-section">
-      <div class="hero-content">
+    <div class="main">
+      <div class="hero-section">
         <h1>Discover Amazing Products</h1>
         <p>Shop the latest trends with confidence</p>
       </div>
-    </div>
-    
-    <div class="categories-section">
-      <h2>Popular Categories</h2>
-      <div class="category-grid">
-        <div class="category-card">
-          <span>Electronics</span>
-        </div>
-        <div class="category-card">
-          <span>Fashion</span>
-        </div>
-        <div class="category-card">
-          <span>Home</span>
-        </div>
-        <div class="category-card">
-          <span>Sports</span>
+
+      <div class="categories-section">
+        <h2>Popular Categories</h2>
+        <div class="categories-grid">
+          <div class="category">Electronics</div>
+          <div class="category">Fashion</div>
+          <div class="category">Home</div>
+          <div class="category">Sports</div>
         </div>
       </div>
-    </div>
 
-    <div class="main">
-      <h2>Featured Products</h2>
       <div class="products-grid">
       </div>
     </div>
 
-    <script src="scripts/amazon.js" type="module"></script>
+    <script type="module" src="scripts/shop.js"></script>
   </body>
 </html>
