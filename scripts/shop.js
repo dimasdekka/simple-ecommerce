@@ -1,5 +1,6 @@
 import {carts, addToCart} from "../data/cart.js";
 import {products } from "../data/products.js";
+import { formatCurrencies } from "./utils/money.js";
 
 let productHTML = ''
 let timeouts = {}; // Objek untuk menyimpan timeout per produk
@@ -25,7 +26,7 @@ products.forEach(e => {
                 </div>
 
                 <div class="product-price">
-                    $${(e.priceCents / 100).toFixed(2)}
+                    $${formatCurrencies(e.priceCents)}
                 </div>
 
                 <div class="product-quantity-container">
