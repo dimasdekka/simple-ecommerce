@@ -61,7 +61,7 @@ products.forEach(e => {
 
 document.querySelector('.products-grid').innerHTML = productHTML;
 
-function updateCartQuantity(productId){
+export function updateCartQuantity(productId){
     let quantityCounter = 0;
     let addedElement = document.querySelector(`.js-added-${productId}`);
     // Tampilkan "Added"
