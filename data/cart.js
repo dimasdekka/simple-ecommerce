@@ -1,4 +1,5 @@
 export let carts = JSON.parse(localStorage.getItem('carts') || '[]');
+let timeouts = {};
 
 export function saveStorage(){
     localStorage.setItem('carts', JSON.stringify(carts));
@@ -34,13 +35,46 @@ export function addToCart(productId) {
     saveStorage();
 }
 
-export function removeCartItem(productId) {
-const cartItems = [];
-carts.forEach((cart)=>{
-    if(cart.productId !== productId){
-    cartItems.push(cart)    
+export function showAddedMessage(productId) {
+    let addedElement = document.querySelector(`.js-added-${productId}`);
+    // Tampilkan "Added"
+    addedElement.style.opacity = "1";
+                
+    if (timeouts[productId]) {
+        clearTimeout(timeouts[productId]);
     }
- });
-carts = cartItems;
-saveStorage();
+    // Sembunyikan setelah 2 detik
+    timeouts[productId] = setTimeout(() => {
+        addedElement.style.opacity = "0";
+    }, 1500);
+}
+
+export function updateCartQuantity() {
+    let quantityCounter = 0;
+    carts.forEach(cartItem => {
+        quantityCounter += cartItem.quantity;
+    });
+
+    // Update cart quantity in shop page
+    const cartQuantityElement = document.querySelector('.cart-quantity');
+    if (cartQuantityElement) {
+        cartQuantityElement.innerHTML = quantityCounter;
+    }
+
+    // Update cart quantity in other pages
+    const returnToHomeLink = document.querySelector('.return-to-home-link');
+    if (returnToHomeLink) {
+        returnToHomeLink.innerHTML = `${quantityCounter} items`;
+    }
+}
+
+export function removeCartItem(productId) {
+    const cartItems = [];
+    carts.forEach((cart)=>{
+        if(cart.productId !== productId){
+        cartItems.push(cart)    
+        }
+    });
+    carts = cartItems;
+    saveStorage();
 }

@@ -1,4 +1,4 @@
-import {carts, addToCart} from "../data/cart.js";
+import {carts, addToCart, showAddedMessage, updateCartQuantity} from "../data/cart.js";
 import {products } from "../data/products.js";
 import { formatCurrencies } from "./utils/money.js";
 
@@ -58,34 +58,17 @@ products.forEach(e => {
                 </div>
     `
 });
+updateCartQuantity()
 
 document.querySelector('.products-grid').innerHTML = productHTML;
-
-export function updateCartQuantity(productId){
-    let quantityCounter = 0;
-    let addedElement = document.querySelector(`.js-added-${productId}`);
-    // Tampilkan "Added"
-    addedElement.style.opacity = "1";
-                
-    if (timeouts[productId]) {
-        clearTimeout(timeouts[productId]);
-    }
-    // Sembunyikan setelah 2 detik
-    timeouts[productId] = setTimeout(() => {
-        addedElement.style.opacity = "0";
-    }, 1500);
-    carts.forEach(cartItem => {
-        quantityCounter += cartItem.quantity;
-    });
-    document.querySelector('.cart-quantity').innerHTML = quantityCounter;
-}
 
 document.querySelectorAll('.add-to-cart-button')
     .forEach((button)=>{
         button.addEventListener('click', (e)=>{
             const {productId} = button.dataset;
             addToCart(productId);
-            updateCartQuantity(productId)
+            showAddedMessage(productId);
+            updateCartQuantity();
             
         })
     })
