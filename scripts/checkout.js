@@ -120,25 +120,39 @@ document.querySelectorAll('.update-quantity-link')
 
 //save
 document.querySelectorAll('.save-quantity-link')
-  .forEach((link)=>{
-    link.addEventListener('click', (event)=>{
-    const productId = event.target.dataset.productId;
-    const container = document.querySelector(`.cart-item-container-${productId}`)
-    container.classList.remove('is-editing-quantity'); 
+  .forEach((link) => {
+    const handleSave = (event) => {
+      const productId = event.target.dataset.productId;
+      const container = document.querySelector(`.cart-item-container-${productId}`);
+      container.classList.remove('is-editing-quantity'); 
 
-    const quantityInput = document.querySelector(
-      `.quantity-input-${productId}`
-    );
-    const newQuantity = Number(quantityInput.value);
-    updateQuantity(productId, newQuantity);
+      const quantityInput = document.querySelector(`.quantity-input-${productId}`);
+      const newQuantity = Number(quantityInput.value);
+
+      if (newQuantity >= 0 && newQuantity <= 1000) {
+        updateQuantity(productId, newQuantity);
+        const quantityLabel = container.querySelector('.quantity-label');
+        quantityLabel.textContent = newQuantity;
+        quantityInput.value = '';
+        
+        CounterCartQuantity();
+      } else {
+        alert('Please enter a valid quantity between 0 and 1000.');
+      }
+    };
+
+    // Event listener buat klik tombol save
+    link.addEventListener('click', handleSave);
+
+    // Ambil input field
+    const quantityInput = document.querySelector(`.quantity-input-${link.dataset.productId}`);
     
-    // Update the quantity label immediately
-    const quantityLabel = container.querySelector('.quantity-label');
-    quantityLabel.textContent = newQuantity;
-    
-    // Clear the input field
-    quantityInput.value = '';
-    
-    CounterCartQuantity();
-    })
-  })
+    // Event listener untuk menekan Enter di input field
+    if (quantityInput) {
+      quantityInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+          handleSave({ target: link }); // ini simulasi biar seakan input mengklik tombol
+        }
+      });
+    }
+  });
