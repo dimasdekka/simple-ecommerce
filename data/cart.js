@@ -49,10 +49,11 @@ export function showAddedMessage(productId) {
     }, 1500);
 }
 
-export function updateCartQuantity() {
+export function CounterCartQuantity() {
     let quantityCounter = 0;
     carts.forEach(cartItem => {
         quantityCounter += cartItem.quantity;
+        
     });
 
     // Update cart quantity in shop page
@@ -67,6 +68,17 @@ export function updateCartQuantity() {
         returnToHomeLink.innerHTML = `${quantityCounter} items`;
     }
 }
+
+export function updateQuantity (productId, newQuantity) {
+    let matchingItem;
+    carts.forEach((cartItem) => {
+      if (productId === cartItem.productId) {
+        matchingItem = cartItem;
+      }
+    });
+    matchingItem.quantity = newQuantity;
+    saveStorage();
+  }
 
 export function removeCartItem(productId) {
     const cartItems = [];

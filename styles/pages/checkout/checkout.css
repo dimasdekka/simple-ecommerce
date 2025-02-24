@@ -202,6 +202,22 @@
   transform: translateY(-2px);
 }
 
+.quantity-input,.save-quantity-link {
+  width: 30px;
+  margin-left: 5px;
+  display: none;
+}
+
+.is-editing-quantity  {
+  .update-quantity-link {
+    display: none;
+  }
+  .quantity-input,
+  .save-quantity-link {
+    display: initial;
+  }
+}
+
 @media (max-width: 800px) {
   .cart-item-details-grid {
     grid-template-columns: 120px 1fr;
