@@ -56,7 +56,6 @@ export function CounterCartQuantity() {
     let quantityCounter = 0;
     carts.forEach(cartItem => {
         quantityCounter += cartItem.quantity;
-        
     });
 
     // Update cart quantity in shop page
@@ -65,11 +64,7 @@ export function CounterCartQuantity() {
         cartQuantityElement.innerHTML = quantityCounter;
     }
 
-    // Update cart quantity in other pages
-    const returnToHomeLink = document.querySelector('.return-to-home-link');
-    if (returnToHomeLink) {
-        returnToHomeLink.innerHTML = `${quantityCounter} items`;
-    }
+    return quantityCounter;
 }
 
 export function updateQuantity (productId, newQuantity) {

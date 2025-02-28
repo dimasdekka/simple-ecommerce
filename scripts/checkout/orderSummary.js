@@ -1,39 +1,20 @@
 import { carts, removeCartItem, updateQuantity, CounterCartQuantity, updateDeliveryOption, saveStorage } from "../../data/cart.js";
-import { products } from "../../data/products.js";
+import { getProduct } from "../../data/products.js";
+import { renderCheckoutHeader } from "./checkoutHeader.js"; 
+import { renderPaymentSummary } from "./paymentSummary.js"; 
 import formatCurrencies from "../utils/money.js";
-import {deliveryOptions} from "../../data/deliveryOptions.js";
-import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
+import {deliveryOptions, getDeliveryOption, calculateDeliveryDate} from "../../data/deliveryOptions.js";
+
 
 export function renderOrderSummary(){
   let cartsHTML = ""; 
   carts.forEach(cartItem => {
       const productId = cartItem.productId;
-      let matchingProduct;
-      products.forEach((product) => {
-          if(product.id === productId) {
-              matchingProduct = product;
-          } 
-      });
-  
+      let matchingProduct = getProduct(productId);
       const deliveryOptionId = cartItem.deliveryOptionId; // Use deliveryOptionId
-      if (deliveryOptionId === undefined) {
-          console.error("Delivery options ID is undefined for cart item:", cartItem);
-          return; // Skip this cart item if deliveryOptionId is undefined
-      }
+      let deliveryOption = getDeliveryOption(deliveryOptionId);
   
-      let deliveryOption;
-      deliveryOptions.forEach(option => {
-          if(option.id == deliveryOptionId){ // Use deliveryOptionId
-              deliveryOption = option;
-          }
-      });
-  
-      const today = dayjs();
-      if (deliveryOption) {
-          const deliveryDate = today.add(deliveryOption.deliveryDays, 'd');
-          const dateString = deliveryDate.format('dddd, D MMMM'); 
-  
-          if (matchingProduct) {
+      const dateString = calculateDeliveryDate(deliveryOption);  
               cartsHTML += `<div class="cart-item-container-${matchingProduct.id}">
                       <div class="delivery-date">
                         ${dateString}
@@ -73,21 +54,13 @@ export function renderOrderSummary(){
                       </div>
                     </div>
               `;
-          } else {
-              console.error("Matching product not found for ID:", productId);
-          }
-      } else {
-          console.error("Delivery option not found for ID:", deliveryOptionId); // Use deliveryOptionId
-      }
   });
   
   function deliveryOptionsHTML(matchingProduct, cartItem) {
     let html= "";
     deliveryOptions.forEach((deliveryOption) => {
-        const today = dayjs();
-        const deliveryDate = today.add(deliveryOption.deliveryDays, 'd');
-        const dateString = deliveryDate.format('dddd, D MMMM'); 
-        const priceString = deliveryOption.price === 0 ? 'FREE Shipping' : `$${formatCurrencies(deliveryOption.price)}- Shipping`;
+        const dateString = calculateDeliveryDate(deliveryOption); 
+        const priceString = deliveryOption.priceCents === 0 ? 'FREE Shipping' : `$${formatCurrencies(deliveryOption.priceCents)}- Shipping`;
         
         let isChecked = cartItem.deliveryOptionId == deliveryOption.id; // Pastikan nilai yang benar digunakan
   
@@ -121,9 +94,9 @@ export function renderOrderSummary(){
         link.addEventListener('click', (link) => {
             const productId = link.target.dataset.productId;
             removeCartItem(productId);
-            const container = document.querySelector(`.cart-item-container-${productId}`);
-            container.remove();
-            CounterCartQuantity();
+            renderCheckoutHeader();
+            renderOrderSummary();
+            renderPaymentSummary();
         });
     });
   
@@ -153,8 +126,8 @@ export function renderOrderSummary(){
                 const quantityLabel = container.querySelector('.quantity-label');
                 quantityLabel.textContent = newQuantity;
                 quantityInput.value = '';
-                
-                CounterCartQuantity();
+                renderCheckoutHeader();
+                renderPaymentSummary();
             } else {
                 alert('Please enter a valid quantity between 0 and 1000.');
             }
@@ -174,6 +147,8 @@ export function renderOrderSummary(){
                 }
             });
         }
+
+        
     });
   
   document.querySelectorAll('.js-delivery-option')
@@ -183,6 +158,7 @@ export function renderOrderSummary(){
       const deliveryOptionId = element.dataset.deliveryOptionId;
       updateDeliveryOption(productId, deliveryOptionId);
       renderOrderSummary()
+      renderPaymentSummary()
     });
   });
 }
