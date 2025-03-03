@@ -1,4 +1,4 @@
-import { CounterCartQuantity } from "../../data/cart.js";
+import cart from "../../data/cart.js";// Create an instance of the Cart class
 
 export function renderCheckoutHeader() {
     const checkoutHeaderHTML = `
@@ -11,7 +11,7 @@ export function renderCheckoutHeader() {
 
         <div class="header-middle-section">
           Checkout (<a class="return-to-home-link"
-            href="index.html">${CounterCartQuantity()}</a>)
+            href="index.html">${cart.counterCartQuantity()}</a>)
         </div>
 
         <div class="header-right-section">
@@ -22,4 +22,4 @@ export function renderCheckoutHeader() {
   
     document.querySelector('.js-checkout-header')
       .innerHTML = checkoutHeaderHTML;
-  }
+}

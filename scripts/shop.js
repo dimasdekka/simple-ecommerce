@@ -1,9 +1,9 @@
-import {carts, addToCart, CounterCartQuantity} from "../data/cart.js";
-import {products } from "../data/products.js";
+import cart from "../data/cart.js";
+import { products } from "../data/products.js";
 import { formatCurrencies } from "./utils/money.js";
 
-let productHTML = ''
-let timeouts = {}; // Objek untuk menyimpan timeout per produk
+let productHTML = '';
+let timeouts = {}; // Object to store timeouts per product
 
 products.forEach(e => {
     productHTML += `
@@ -56,32 +56,31 @@ products.forEach(e => {
                     Add to Cart
                 </button>
                 </div>
-    `
+    `;
 });
-CounterCartQuantity();
+cart.counterCartQuantity();
 document.querySelector('.products-grid').innerHTML = productHTML;
 
 document.querySelectorAll('.add-to-cart-button')
-    .forEach((button)=>{
-        button.addEventListener('click', (e)=>{
-            const {productId} = button.dataset;
-            addToCart(productId);
+    .forEach((button) => {
+        button.addEventListener('click', (e) => {
+            const { productId } = button.dataset;
+            cart.addToCart(productId);
             showAddedMessage(productId);
-            CounterCartQuantity();
-            
-        })
-    })
+            cart.counterCartQuantity();
+        });
+    });
 
 function showAddedMessage(productId) {
-        let addedElement = document.querySelector(`.js-added-${productId}`);
-        // Tampilkan "Added"
-        addedElement.style.opacity = "1";
-                    
-        if (timeouts[productId]) {
-            clearTimeout(timeouts[productId]);
-        }
-        // Sembunyikan setelah 2 detik
-        timeouts[productId] = setTimeout(() => {
-            addedElement.style.opacity = "0";
-        }, 1500);
+    let addedElement = document.querySelector(`.js-added-${productId}`);
+    // Show "Added"
+    addedElement.style.opacity = "1";
+
+    if (timeouts[productId]) {
+        clearTimeout(timeouts[productId]);
     }
+    // Hide after 2 seconds
+    timeouts[productId] = setTimeout(() => {
+        addedElement.style.opacity = "0";
+    }, 1500);
+}
