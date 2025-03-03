@@ -1,4 +1,4 @@
-import {carts, addToCart, showAddedMessage, CounterCartQuantity} from "../data/cart.js";
+import {carts, addToCart, CounterCartQuantity} from "../data/cart.js";
 import {products } from "../data/products.js";
 import { formatCurrencies } from "./utils/money.js";
 
@@ -71,3 +71,17 @@ document.querySelectorAll('.add-to-cart-button')
             
         })
     })
+
+function showAddedMessage(productId) {
+        let addedElement = document.querySelector(`.js-added-${productId}`);
+        // Tampilkan "Added"
+        addedElement.style.opacity = "1";
+                    
+        if (timeouts[productId]) {
+            clearTimeout(timeouts[productId]);
+        }
+        // Sembunyikan setelah 2 detik
+        timeouts[productId] = setTimeout(() => {
+            addedElement.style.opacity = "0";
+        }, 1500);
+    }

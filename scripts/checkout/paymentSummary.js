@@ -9,6 +9,7 @@ export function renderPaymentSummary(){
     carts.forEach(cartItem => {
         // item
         const product = getProduct(cartItem.productId);
+        console.log(product);
         productPriceCents +=  product.priceCents * cartItem.quantity;
 
         //shipping

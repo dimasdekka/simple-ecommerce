@@ -7,15 +7,15 @@ export function saveStorage(){
 
 export function addToCart(productId) {
     const quantitySelector = document.querySelector(`.js-quantity-selector-${productId}`);
-    if (!quantitySelector) {
-        console.error(`Quantity selector for product ${productId} not found`);
-        return;
-    }
     
-    let productQuantity = Number(quantitySelector.value);
-    if (productQuantity <= 0) {
-        console.error('Quantity must be greater than 0');
-        return;
+    // Default quantity 1 jika tidak ada selector atau value tidak valid
+    let productQuantity = 1;
+
+    if (quantitySelector) {
+        const inputValue = Number(quantitySelector.value);
+        if (!isNaN(inputValue) && inputValue > 0) {
+            productQuantity = inputValue;
+        }
     }
 
     let productExists = false;
@@ -33,10 +33,10 @@ export function addToCart(productId) {
             deliveryOptionId: 1,
         });
     }
-    console.log(carts);
-    
+
     saveStorage();
 }
+
 
 export function showAddedMessage(productId) {
     let addedElement = document.querySelector(`.js-added-${productId}`);
