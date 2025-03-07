@@ -1,28 +1,66 @@
+import formatCurrencies from "../scripts/utils/money.js";
+
 export function getProduct(productId){
-  let matchingProduct;
-      products.forEach((product) => {
-          if(product.id === productId) {
-              matchingProduct = product;
-          } 
-      });
-  return matchingProduct;
+  return products.find(product => product.id === productId);
 }
 
 class Product {
-  id;
-  image;
-  name;
-  rating = {
-    stars: 0,
-    count: 0
-  };
-  priceCents;
-  keywords = [];
+  constructor(productDetail) {
+    this.id = productDetail.id;
+    this.image = productDetail.image;
+    this.name = productDetail.name;
+    this.rating = productDetail.rating;
+    this.priceCents = productDetail.priceCents;
+    this.keywords = productDetail.keywords;
+  }
+
+  getStarsUrl() {
+    return `images/ratings/rating-${this.rating.stars * 10}.png`;
+  }
+
+  getPriceDollars() {
+    return formatCurrencies(this.priceCents);
+  }
+
+  extraInfoHTML() {
+    return "";
+  }
 }
 
+class Fashion extends Product {
+  constructor(productDetail) {
+    super(productDetail);
+    this.category = "fashion";
+    this.sizeChartLink = productDetail.sizeChartLink || "images/clothing-size-chart.png"; 
+  }
+  extraInfoHTML() {
+    return `<a href="${this.sizeChartLink}" target="_blank">Size Chart</a>`;
+  }
+}
+
+class Electronics extends Product {
+  constructor(productDetail) {
+    super(productDetail);
+    this.category = "electronics";
+  }
+}
+
+class Home extends Product {
+  constructor(productDetail) {
+    super(productDetail);
+    this.category = "home";
+  }
+}
+
+class Sports extends Product {
+  constructor(productDetail) {
+    super(productDetail);
+    this.category = "sports";
+  }
+}
 
 export const products = [
-{
+  {
     id: "a1b2c3d4-e5f6-7890-ghij-1234567890kl",
     image: "images/products/stainless-steel-cookware-set.jpg",
     name: "Stainless Steel Cookware Set - 10 Pieces",
@@ -37,9 +75,10 @@ export const products = [
       "stainless steel",
       "pots",
       "pans"
-    ]
-},
-{
+    ],
+    category: "home"
+  },
+  {
     id: "z9y8x7w6-v5u4-3210-tuvw-0987654321mn",
     image: "images/products/ergonomic-office-chair.jpg",
     name: "Ergonomic Office Chair - Adjustable Height",
@@ -54,9 +93,10 @@ export const products = [
       "furniture",
       "ergonomic",
       "adjustable"
-    ]
-},
-{
+    ],
+    category: "home"
+  },
+  {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
     image: "images/products/athletic-cotton-socks-6-pairs.jpg",
     name: "Black and Gray Athletic Cotton Socks - 6 Pairs",
@@ -69,7 +109,8 @@ export const products = [
       "socks",
       "sports",
       "apparel"
-    ]
+    ],
+    category: "fashion"
   },
   {
     id: "15b6fc6f-327a-4ec4-896f-486349e85a3d",
@@ -83,7 +124,8 @@ export const products = [
     keywords: [
       "sports",
       "basketballs"
-    ]
+    ],
+    category: "sports"
   },
   {
     id: "83d4ca15-0f35-48f5-b7a3-1ea210004f2e",
@@ -100,7 +142,8 @@ export const products = [
       "mens"
     ],
     type: "clothing",
-    sizeChartLink: "images/clothing-size-chart.png"
+    sizeChartLink: "images/clothing-size-chart.png",
+    category: "fashion"
   },
   {
     id: "54e0eccd-8f36-462b-b68a-8182611d9add",
@@ -115,7 +158,8 @@ export const products = [
       "toaster",
       "kitchen",
       "appliances"
-    ]
+    ],
+    category: "home"
   },
   {
     id: "3ebe75dc-64d2-4137-8860-1f5a963e534b",
@@ -130,7 +174,8 @@ export const products = [
       "plates",
       "kitchen",
       "dining"
-    ]
+    ],
+    category: "home"
   },
   {
     id: "8c9c52b5-5a19-4bcb-a5d1-158a74287c53",
@@ -144,7 +189,8 @@ export const products = [
     keywords: [
       "kitchen",
       "cookware"
-    ]
+    ],
+    category: "home"
   },
   {
     id: "dd82ca78-a18b-4e2a-9250-31e67412f98d",
@@ -159,7 +205,8 @@ export const products = [
       "hoodies",
       "sweaters",
       "apparel"
-    ]
+    ],
+    category: "fashion"
   },
   {
     id: "77919bbe-0e56-475b-adde-4f24dfed3a04",
@@ -176,7 +223,8 @@ export const products = [
       "restroom",
       "towels",
       "bath towels"
-    ]
+    ],
+    category: "home"
   },
   {
     id: "3fdfe8d6-9a15-4979-b459-585b0d0545b9",
@@ -190,7 +238,8 @@ export const products = [
     keywords: [
       "bathroom",
       "cleaning"
-    ]
+    ],
+    category: "home"
   },
   {
     id: "58b4fc92-e98c-42aa-8c55-b6b79996769a",
@@ -205,7 +254,8 @@ export const products = [
       "shoes",
       "running shoes",
       "footwear"
-    ]
+    ],
+    category: "fashion"
   },
   {
     id: "5968897c-4d27-4872-89f6-5bcb052746d7",
@@ -224,7 +274,8 @@ export const products = [
       "apparel"
     ],
     type: "clothing",
-    sizeChartLink: "images/clothing-size-chart.png"
+    sizeChartLink: "images/clothing-size-chart.png",
+    category: "fashion"
   },
   {
     id: "aad29d11-ea98-41ee-9285-b916638cac4a",
@@ -238,7 +289,8 @@ export const products = [
     keywords: [
       "accessories",
       "shades"
-    ]
+    ],
+    category: "fashion"
   },
   {
     id: "04701903-bc79-49c6-bc11-1af7e3651358",
@@ -255,7 +307,8 @@ export const products = [
       "womens",
       "beach",
       "summer"
-    ]
+    ],
+    category: "fashion"
   },
   {
     id: "901eb2ca-386d-432e-82f0-6fb1ee7bf969",
@@ -270,7 +323,8 @@ export const products = [
       "bedroom",
       "curtains",
       "home"
-    ]
+    ],
+    category: "home"
   },
   {
     id: "82bb68d7-ebc9-476a-989c-c78a40ee5cd9",
@@ -285,7 +339,8 @@ export const products = [
       "shorts",
       "apparel",
       "mens"
-    ]
+    ],
+    category: "fashion"
   },
   {
     id: "c2a82c5e-aff4-435f-9975-517cfaba2ece",
@@ -300,7 +355,8 @@ export const products = [
       "water boiler",
       "appliances",
       "kitchen"
-    ]
+    ],
+    category: "electronics"
   },
   {
     id: "6b07d4e7-f540-454e-8a1e-363f25dbae7d",
@@ -317,7 +373,8 @@ export const products = [
       "kitchen",
       "tissues box",
       "napkins"
-    ]
+    ],
+    category: "home"
   },
   {
     id: "a82c6bac-3067-4e68-a5ba-d827ac0be010",
@@ -333,7 +390,8 @@ export const products = [
       "straw hats",
       "summer",
       "apparel"
-    ]
+    ],
+    category: "fashion"
   },
   {
     id: "e4f64a65-1377-42bc-89a5-e572d19252e2",
@@ -348,7 +406,8 @@ export const products = [
       "jewelry",
       "accessories",
       "womens"
-    ]
+    ],
+    category: "fashion"
   },
   {
     id: "b0f17cc5-8b40-4ca5-9142-b61fe3d98c85",
@@ -367,7 +426,8 @@ export const products = [
       "apparel"
     ],
     type: "clothing",
-    sizeChartLink: "images/clothing-size-chart.png"
+    sizeChartLink: "images/clothing-size-chart.png",
+    category: "fashion"
   },
   {
     id: "a93a101d-79ef-4cf3-a6cf-6dbe532a1b4a",
@@ -382,7 +442,8 @@ export const products = [
       "bathmat",
       "bathroom",
       "home"
-    ]
+    ],
+    category: "home"
   },
   {
     id: "4f4fbcc2-4e72-45cc-935c-9e13d79cc57f",
@@ -398,7 +459,8 @@ export const products = [
       "flats",
       "womens",
       "footwear"
-    ]
+    ],
+    category: "fashion"
   },
   {
     id: "8b5a2ee1-6055-422a-a666-b34ba28b76d4",
@@ -416,7 +478,8 @@ export const products = [
       "mens"
     ],
     type: "clothing",
-    sizeChartLink: "images/clothing-size-chart.png"
+    sizeChartLink: "images/clothing-size-chart.png",
+    category: "fashion"
   },
   {
     id: "b86ddc8b-3501-4b17-9889-a3bad6fb585f",
@@ -432,7 +495,8 @@ export const products = [
       "bins",
       "cans",
       "kitchen"
-    ]
+    ],
+    category: "home"
   },
   {
     id: "19c6a64a-5463-4d45-9af8-e41140a4100c",
@@ -449,7 +513,8 @@ export const products = [
       "sheets",
       "covers",
       "home"
-    ]
+    ],
+    category: "home"
   },
   {
     id: "d2785924-743d-49b3-8f03-ec258e640503",
@@ -467,7 +532,8 @@ export const products = [
       "tuques",
       "apparel",
       "womens"
-    ]
+    ],
+    category: "fashion"
   },
   {
     id: "ee1f7c56-f977-40a4-9642-12ba5072e2b0",
@@ -482,7 +548,8 @@ export const products = [
       "pants",
       "apparel",
       "mens"
-    ]
+    ],
+    category: "fashion"
   },
   {
     id: "1c079479-8586-494f-ab53-219325432536",
@@ -498,7 +565,8 @@ export const products = [
       "running shoes",
       "footwear",
       "mens"
-    ]
+    ],
+    category: "fashion"
   },
   {
     id: "4df68c27-fd59-4a6a-bbd1-e754ddb6d53c",
@@ -514,7 +582,8 @@ export const products = [
       "glasses",
       "accessories",
       "shades"
-    ]
+    ],
+    category: "fashion"
   },
   {
     id: "4e37dd03-3b23-4bc6-9ff8-44e112a92c64",
@@ -528,7 +597,8 @@ export const products = [
     keywords: [
       "cooking set",
       "kitchen"
-    ]
+    ],
+    category: "home"
   },
   {
     id: "a434b69f-1bc1-482d-9ce7-cd7f4a66ce8d",
@@ -544,7 +614,8 @@ export const products = [
       "washroom",
       "mirrors",
       "home"
-    ]
+    ],
+    category: "home"
   },
   {
     id: "a45cfa0a-66d6-4dc7-9475-e2b01595f7d7",
@@ -561,7 +632,8 @@ export const products = [
       "jogging",
       "apparel",
       "womens"
-    ]
+    ],
+    category: "fashion"
   },
   {
     id: "d339adf3-e004-4c20-a120-40e8874c66cb",
@@ -575,7 +647,8 @@ export const products = [
     keywords: [
       "accessories",
       "womens"
-    ]
+    ],
+    category: "fashion"
   },
   {
     id: "d37a651a-d501-483b-aae6-a9659b0757a0",
@@ -590,7 +663,8 @@ export const products = [
       "boxes",
       "food containers",
       "kitchen"
-    ]
+    ],
+    category: "home"
   },
   {
     id: "0d7f9afa-2efe-4fd9-b0fd-ba5663e0a524",
@@ -605,7 +679,8 @@ export const products = [
       "coffeemakers",
       "kitchen",
       "appliances"
-    ]
+    ],
+    category: "home"
   },
   {
     id: "02e3a47e-dd68-467e-9f71-8bf6f723fdae",
@@ -619,7 +694,8 @@ export const products = [
     keywords: [
       "bedroom",
       "home"
-    ]
+    ],
+    category: "home"
   },
   {
     id: "8a53b080-6d40-4a65-ab26-b24ecf700bce",
@@ -634,7 +710,8 @@ export const products = [
       "bathroom",
       "home",
       "towels"
-    ]
+    ],
+    category: "home"
   },
   {
     id: "10ed8504-57db-433c-b0a3-fc71a35c88a1",
@@ -650,7 +727,8 @@ export const products = [
       "running shoes",
       "footwear",
       "womens"
-    ]
+    ],
+    category: "fashion"
   },
   {
     id: "77a845b1-16ed-4eac-bdf9-5b591882113d",
@@ -665,7 +743,8 @@ export const products = [
       "food blenders",
       "kitchen",
       "appliances"
-    ]
+    ],
+    category: "home"
   },
   {
     id: "36c64692-677f-4f58-b5ec-0dc2cf109e27",
@@ -681,7 +760,8 @@ export const products = [
       "baking",
       "cookware",
       "kitchen"
-    ]
+    ],
+    category: "home"
   },
   {
     id: "aaa65ef3-8d6f-4eb3-bc9b-a6ea49047d8f",
@@ -696,7 +776,8 @@ export const products = [
       "kitchen",
       "kitchen towels",
       "tissues"
-    ]
+    ],
+    category: "home"
   },
   {
     id: "bc2847e9-5323-403f-b7cf-57fde044a955",
@@ -712,6 +793,20 @@ export const products = [
       "hoodies",
       "apparel",
       "mens"
-    ]
+    ],
+    category: "fashion"
   }
-];
+].map((productDetail) => {
+  switch (productDetail.category) {
+    case "fashion":
+      return new Fashion(productDetail);
+    case "electronics":
+      return new Electronics(productDetail);
+    case "home":
+      return new Home(productDetail);
+    case "sports":
+      return new Sports(productDetail);
+    default:
+      return new Product(productDetail);
+  }
+});
