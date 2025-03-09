@@ -1,5 +1,5 @@
 import cart from "../data/cart.js";
-import { products } from "../data/products.js";
+import { products, loadProduct } from "../data/products.js";
 
 let productHTML = '';
 let timeouts = {}; // Object to store timeouts per product
@@ -104,7 +104,9 @@ function showAddedMessage(productId) {
 }
 
 // Render all products by default
-renderProducts();
+// Load products and render them
+loadProduct(renderProducts);
+
 
 // Add event listeners to category buttons
 document.querySelectorAll('.category').forEach((categoryButton) => {
