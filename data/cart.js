@@ -72,4 +72,16 @@ class Cart {
 }
 
 const cart = new Cart('cart');
+
+export function loadCart(callback) {
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", "https://supersimplebackend.dev/cart");
+  xhr.send();
+
+  xhr.addEventListener("load", () => {
+        console.log(xhr.response);
+        callback();
+        });
+}
+
 export default cart;

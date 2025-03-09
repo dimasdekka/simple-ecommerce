@@ -5,14 +5,11 @@ import { getDeliveryOption } from "../../data/deliveryOptions.js";
 import formatCurrencies from "../utils/money.js";
 
 export function renderPaymentSummary() {
-    console.log(cart.cartItems)
     let productPriceCents = 0;
     let deliveryPriceCents = 0;
     cart.cartItems.forEach(cartItem => {
         // item
         const product = getProduct(cartItem.productId);
-        console.log(product)
-        console.log(product.priceCents);
         productPriceCents += product.priceCents * cartItem.quantity;
 
         // shipping

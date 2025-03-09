@@ -68,7 +68,7 @@ class Sports extends Product {
 export let products = [];
 export function loadProduct(callback) {
   const xhr = new XMLHttpRequest();
-  xhr.open("GET", "https://supersimplebackend.dev/products");
+  xhr.open("GET", "backend/products.json");
   xhr.send();
 
   xhr.addEventListener("load", function () {
@@ -86,7 +86,6 @@ export function loadProduct(callback) {
               return new Product(productDetail);
           }
         });
-        console.log("Produk berhasil dimuat:", products);
         callback();
   });
 }
