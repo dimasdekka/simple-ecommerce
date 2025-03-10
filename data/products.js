@@ -66,26 +66,25 @@ class Sports extends Product {
 }
 
 export let products = [];
-export function loadProduct(callback) {
-  const xhr = new XMLHttpRequest();
-  xhr.open("GET", "backend/products.json");
-  xhr.send();
 
-  xhr.addEventListener("load", function () {
-        products = JSON.parse(xhr.response).map((productDetail) => {
-          switch (productDetail.category) {
-            case "fashion":
-              return new Fashion(productDetail);
-            case "electronics":
-              return new Electronics(productDetail);
-            case "home":
-              return new Home(productDetail);
-            case "sports":
-              return new Sports(productDetail);
-            default:
-              return new Product(productDetail);
-          }
-        });
-        callback();
-  });
+export function loadProducts() {
+  return fetch("backend/products.json").then(response => {
+    return response.json();
+  }).then(data => {
+    products = data.map((productDetail) => {
+      switch (productDetail.category) {
+        case "fashion":
+          return new Fashion(productDetail);
+        case "electronics":
+          return new Electronics(productDetail);
+        case "home":
+          return new Home(productDetail);
+        case "sports":
+          return new Sports(productDetail);
+        default:
+          return new Product(productDetail);
+      }
+    });
+    return products;
+  })
 }

@@ -1,16 +1,18 @@
 import { renderOrderSummary } from "./checkout/orderSummary.js";
 import { renderPaymentSummary } from "./checkout/paymentSummary.js";
 import { renderCheckoutHeader } from "./checkout/checkoutHeader.js";
-import { loadProduct } from "../data/products.js";
-import  cart, { loadCart }  from "../data/cart.js";
+import { loadProducts } from "../data/products.js";
+import { loadCart }  from "../data/cart.js";
 
-Promise.all([
-    new Promise(resolve => loadProduct(() => resolve())),
-    new Promise(resolve => loadCart(() => resolve()))
-]).then(() => {
+async function loadPage() {
+    await loadProducts();
+    await new Promise(resolve => loadCart(() => resolve())); 
     renderCheckoutHeader();
     renderOrderSummary();
     renderPaymentSummary();
-});
+}
+
+loadPage();
+
 
 

@@ -1,9 +1,14 @@
 import cart from "../data/cart.js";
-import { products, loadProduct } from "../data/products.js";
+import { products, loadProducts } from "../data/products.js";
+import { renderOrderSummary } from "./checkout/orderSummary.js";
 
 let productHTML = '';
 let timeouts = {}; // Object to store timeouts per product
 
+// Load products and render them
+loadProducts().then(() => {
+  renderProducts(); 
+});
 // Function to render products based on category
 function renderProducts(category = "all") {
   // Clear existing products
@@ -102,11 +107,6 @@ function showAddedMessage(productId) {
     addedElement.style.opacity = "0";
   }, 1500);
 }
-
-// Render all products by default
-// Load products and render them
-loadProduct(renderProducts);
-
 
 // Add event listeners to category buttons
 document.querySelectorAll('.category').forEach((categoryButton) => {
