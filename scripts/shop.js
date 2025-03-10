@@ -1,6 +1,5 @@
 import cart from "../data/cart.js";
 import { products, loadProducts } from "../data/products.js";
-import { renderOrderSummary } from "./checkout/orderSummary.js";
 
 let productHTML = '';
 let timeouts = {}; // Object to store timeouts per product

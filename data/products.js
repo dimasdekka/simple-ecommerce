@@ -1,4 +1,5 @@
 import formatCurrencies from "../scripts/utils/money.js";
+export let products = [];
 
 export function getProduct(productId) {
   const product = products.find(product => product.id === productId);
@@ -65,26 +66,31 @@ class Sports extends Product {
   }
 }
 
-export let products = [];
-
-export function loadProducts() {
-  return fetch("backend/products.json").then(response => {
-    return response.json();
-  }).then(data => {
-    products = data.map((productDetail) => {
-      switch (productDetail.category) {
-        case "fashion":
-          return new Fashion(productDetail);
-        case "electronics":
-          return new Electronics(productDetail);
-        case "home":
-          return new Home(productDetail);
-        case "sports":
-          return new Sports(productDetail);
-        default:
-          return new Product(productDetail);
-      }
-    });
-    return products;
-  })
+export async function loadProducts() {
+  try{
+    return await fetch("backend/products.json").then(response => {
+      return response.json();
+    }).then(data => {
+      products = data.map((productDetail) => {
+        switch (productDetail.category) {
+          case "fashion":
+            return new Fashion(productDetail);
+          case "electronics":
+            return new Electronics(productDetail);
+          case "home":
+            return new Home(productDetail);
+          case "sports":
+            return new Sports(productDetail);
+          default:
+            return new Product(productDetail);
+        }
+      });
+      return products;
+    })
+  }
+  catch(error){
+    console.error("Error loading products:", error);
+    alert("Failed to load products. Please try again later."); // Memberikan alert kepada user
+    return []; // Mengembalikan array kosong jika terjadi error
+  }
 }
