@@ -8,6 +8,7 @@ console.log(orders);
 
 async function loadPage() {
   await loadProducts();
+  cart.counterCartQuantity();
   let ordersHTML = ''; // Initialize the variable to store the HTML for all orders
 
   orders.forEach(order => {
@@ -77,24 +78,24 @@ async function loadPage() {
     });
     return productHtml;
   }
-
+  
   // Render the orders HTML
   document.querySelector('.orders-grid').innerHTML = ordersHTML;
-  // document.querySelectorAll('.js-buy-again').forEach((button) => {
-  //   button.addEventListener('click', () => {
-  //     cart.addToCart(button.dataset.productId);
 
-  //     // (Optional) display a message that the product was added,
-  //     // then change it back after a second.
-  //     button.innerHTML = 'Added';
-  //     setTimeout(() => {
-  //       button.innerHTML = `
-  //         <img class="buy-again-icon" src="images/icons/buy-again.png">
-  //         <span class="buy-again-message">Buy it again</span>
-  //       `;
-  //     }, 1000);
-  //   });
-  // });
+  document.querySelectorAll('.js-buy-again').forEach((button) => {
+    button.addEventListener('click', () => {
+      const { productId } = button.dataset;
+      cart.addToCart(productId);
+      button.innerHTML = 'Added';
+      setTimeout(() => {
+        button.innerHTML = `
+          <img class="buy-again-icon" src="images/icons/buy-again.png">
+          <span class="buy-again-message">Buy it again</span>
+        `;
+      }, 1000);
+      cart.counterCartQuantity();
+    });
+  });
 }
 
 loadPage();

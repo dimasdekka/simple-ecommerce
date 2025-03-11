@@ -7,3 +7,8 @@ export function addOrder(order) {
 function saveStorage() {
     localStorage.setItem('orders', JSON.stringify(orders));
 }
+
+export function getOrder(orderId){
+  const order = orders.find(order => order.id === orderId);
+  return order;
+}
