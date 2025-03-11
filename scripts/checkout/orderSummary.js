@@ -1,5 +1,5 @@
 import cart from "../../data/cart.js";
-import { getProduct, loadProducts } from "../../data/products.js";
+import { getProduct } from "../../data/products.js";
 import { renderCheckoutHeader } from "./checkoutHeader.js"; 
 import { renderPaymentSummary } from "./paymentSummary.js"; 
 import formatCurrencies from "../utils/money.js";

@@ -5,19 +5,24 @@ import { loadProducts } from "../data/products.js";
 import { loadCart }  from "../data/cart.js";
 
 async function loadPage() {
-    try{
-        await loadProducts();
-        await new Promise(resolve => loadCart(() => resolve())); 
-        renderCheckoutHeader();
-        renderOrderSummary();
-        renderPaymentSummary();
+    try {
+      await Promise.all([
+        loadProducts(),
+        loadCart()
+      ]);
+  
+      // Only render if there are no errors
+      renderCheckoutHeader();
+      renderOrderSummary();
+      renderPaymentSummary();
+  
     } catch (error) {
-        console.error("Error loading products:", error);
-        alert("Failed to load products. Please try again later."); // Memberikan alert kepada user
+      console.error('Unexpected error. Please try again later.', error);
+      alert('Failed to load the page. Please try again later.');
     }
-}
-
-loadPage();
+  }
+  
+  loadPage();
 
 
 

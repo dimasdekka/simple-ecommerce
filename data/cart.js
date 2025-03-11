@@ -31,9 +31,9 @@ class Cart {
             existingItem.quantity += productQuantity;
         } else {
             this.cartItems.set(productId, {
-                productId: productId,
-                quantity: productQuantity,
-                deliveryOptionId: 1,
+                productId: String(productId), // Pastikan dalam bentuk string
+                quantity: Number(productQuantity), // Pastikan dalam bentuk number
+                deliveryOptionId: String(1), // Pastikan dalam bentuk string
             });
         }
 
@@ -52,7 +52,7 @@ class Cart {
     updateQuantity(productId, newQuantity) {
         if (this.cartItems.has(productId)) {
             const matchingItem = this.cartItems.get(productId);
-            matchingItem.quantity = newQuantity;
+            matchingItem.quantity = Number(newQuantity); // Pastikan dalam bentuk number
             this.saveStorage();
         }
     }
@@ -65,23 +65,49 @@ class Cart {
     updateDeliveryOption(productId, deliveryOptionId) {
         if (this.cartItems.has(productId)) {
             const matchingItem = this.cartItems.get(productId);
-            matchingItem.deliveryOptionId = deliveryOptionId;
+            matchingItem.deliveryOptionId = String(deliveryOptionId); // Pastikan dalam bentuk string
             this.saveStorage();
         }
+    }
+
+    getItems() {
+        // Pastikan semua item memiliki tipe data yang benar sebelum dikembalikan
+        return Array.from(this.cartItems.values()).map(item => ({
+            productId: String(item.productId),
+            quantity: Number(item.quantity),
+            deliveryOptionId: String(item.deliveryOptionId),
+        }));
+    }
+    clearCart() {
+        this.cartItems.clear(); // Clear the Map
+        this.saveStorage(); // Update local storage
     }
 }
 
 const cart = new Cart('cart');
 
-export function loadCart(callback) {
-  const xhr = new XMLHttpRequest();
-  xhr.open("GET", "https://supersimplebackend.dev/cart");
-  xhr.send();
+// export function loadCart(callback) {
+//     const xhr = new XMLHttpRequest();
+//     xhr.open("GET", "https://supersimplebackend.dev/cart");
+//     xhr.send();
 
-  xhr.addEventListener("load", () => {
-        console.log(xhr.response);
-        callback();
-        });
+//     xhr.addEventListener("load", () => {
+//         console.log(xhr.response);
+//         callback();
+//     });
+// }
+
+export async function loadCart() {
+    try{
+    const response = await fetch("https://supersimplebackend.dev/cart");
+    const cart = await response.text();
+    console.log(cart);
+    return cart;
+    }
+    catch(error){
+        console.log("Error loading cart:", error);
+        alert("Failed to load cart. Please try again later.");
+    }
 }
 
 export default cart;

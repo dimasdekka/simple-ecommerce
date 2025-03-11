@@ -3,6 +3,8 @@ import cart from "../../data/cart.js";
 import { getProduct } from "../../data/products.js";
 import { getDeliveryOption } from "../../data/deliveryOptions.js";
 import formatCurrencies from "../utils/money.js";
+import { addOrder } from "../../data/orders.js";
+import { renderCheckoutHeader } from "./checkoutHeader.js";
 
 export function renderPaymentSummary() {
     let productPriceCents = 0;
@@ -51,11 +53,31 @@ export function renderPaymentSummary() {
                                 <div class="payment-summary-money">$${formatCurrencies(total)}</div>
                             </div>
 
-                            <button class="place-order-button">
+                            <button class="place-order-button js-place-order">
                                 Place your order
                             </button>
                         </div>
                         `;
-
     document.querySelector('.payment-summary').innerHTML = paymentSummaryHTML;
+    document.querySelector('.js-place-order').addEventListener('click', async () => {
+        try {
+            const cartData = cart.getItems();
+            console.log('Submitting order:', cartData);  // Cek data sebelum dikirim
+            const response = await fetch('https://supersimplebackend.dev/orders', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ cart: cartData })  // Kirim dalam format JSON yang benar
+            });
+            const order = await response.json();
+            addOrder(order);
+            cart.clearCart();
+        } catch (error) {
+            console.error('Error submitting order:', error);
+        }
+        window.location.href = 'orders.html';
+    });
+    
+    
 }
