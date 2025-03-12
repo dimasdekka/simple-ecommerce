@@ -13,11 +13,25 @@ function renderProducts(category = "all") {
   // Clear existing products
   productHTML = '';
 
-  // Filter products based on category
-  const filteredProducts = category === "all"
-    ? products // Show all products if "all" is selected
-    : products.filter(product => product.category === category);
+  const input = document.querySelector('.search-bar');
+  const url = new URL(window.location.href);
+  const search = url.searchParams.get('search') || '';
+  input.value = search; // Set value input dari URL
 
+  // Filter produk berdasarkan pencarian
+  let filteredProducts = products;
+
+  // Filter berdasarkan kategori jika bukan "all"
+  if (category !== "all") {
+    filteredProducts = filteredProducts.filter(product => product.category === category);
+  }
+
+  // Filter berdasarkan pencarian jika ada nilai search
+  if (search) {
+    filteredProducts = filteredProducts.filter(product =>
+      product.name.toLowerCase().includes(search.toLowerCase())
+    );
+  }
   // Generate HTML for filtered products
   filteredProducts.forEach(product => {
     productHTML += `
@@ -114,6 +128,24 @@ document.querySelectorAll('.category').forEach((categoryButton) => {
     renderProducts(category);
   });
 });
+
+// Fungsi pencarian
+function searchProducts() {
+  const search = document.querySelector('.search-bar').value;
+  window.location.href = `index.html?search=${search}`;
+}
+
+// Event listener untuk tombol search
+document.querySelector('.search-button').addEventListener('click', searchProducts);
+
+// Event listener untuk enter di search input
+document.querySelector('.search-bar').addEventListener('keypress', (event) => {
+  if (event.key === 'Enter') {
+    searchProducts();
+  }
+});
+
+
 
 // Update cart quantity on page load
 cart.counterCartQuantity();

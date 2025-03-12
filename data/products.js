@@ -90,7 +90,7 @@ export async function loadProducts() {
   }
   catch(error){
     console.error("Error loading products:", error);
-    alert("Failed to load products. Please try again later."); // Memberikan alert kepada user
+    alert("Failed to load products. Please try again later.");
     return []; // Mengembalikan array kosong jika terjadi error
   }
 }
